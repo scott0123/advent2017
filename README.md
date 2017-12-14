@@ -4,7 +4,7 @@ These are my solutions to the "Advent of Code 2017" event. Feel free to look at 
 ## Important
 You must have my custom input/output library "IO" installed or it wont compile.
 
-you can find this [here](https://github.com/scott0123/IO)
+You can find this [here](https://github.com/scott0123/IO)
 
 The file structure should look like:
 
@@ -24,6 +24,5 @@ The file structure should look like:
         return 0;
     }
     ```
-2. Run the `make` command
-    If this fails, try `make clean` and then `make`
+2. Run the `make` command (If this fails, try `make clean` and then `make`)
 3. Run `./advent`
