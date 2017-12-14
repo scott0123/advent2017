@@ -1,0 +1,4 @@
+default:
+	clang++ -std=c++11 main.cpp ../IO/io.cpp day*.cpp -o advent
+clean:
+	rm -f *.o
