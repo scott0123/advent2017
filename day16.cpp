@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #define LETTER_NUM 16
+#define DANCE_IT 1000000000
 
 /*
 
@@ -103,44 +104,57 @@ void day16_bonus(){
         v.push_back('a' + i);
     }
 
-    // loop through the input and execute the instructions
-    for(int i = 0; i < input.size(); i++){
-        if(input[i][0] == 's'){
-            // swap
-            int count = string_to_int(input[i]);
-            for(int j = 0; j < LETTER_NUM - count; j++){
-                v.push_back(v.front());
-                v.erase(v.begin());
+    // make a map to remember if this combo is seen before
+    map<vector<char>, int> m;
+    int period = -1;
+
+    for(int k = DANCE_IT; k > 0; k--){
+        // skip all the periods
+        if(period > 0 && k > period){
+            k %= period;
+            //cout << "new k is " << k << endl;
+        } else if (period < 0) {
+            // have we seen this before?
+            if(m.find(v) != m.end()){
+                // if we have, we can skip every period from now on
+                if(period < 0) period = DANCE_IT - k;
+                //cout << "cycle found at " << period << endl;
+            } else {
+                // otherwise map it
+                m[v] = 1;
+                //cout << k << ": no cycle" << endl;
             }
-        } else if (input[i][0] == 'x'){
-            // exchange
-            string s1 = input[i];
-            string s2 = input[i];
-            while(s1.back() != '/') s1.pop_back();
-            while(s2.front() != '/') s2.erase(s2.begin());
-            int n1 = string_to_int(s1);
-            int n2 = string_to_int(s2);
-            iter_swap(v.begin() + n1, v.begin() + n2);
-        } else if (input[i][0] == 'p'){
-            // partner
-            int index1;
-            int index2;
-            for(int j = 0; j < LETTER_NUM; j++){
-                if(v[j] == input[i][1]) index1 = j;
-                if(v[j] == input[i][3]) index2 = j;
+        }
+        // loop through the input and execute the instructions
+        for(int i = 0; i < input.size(); i++){
+            if(input[i][0] == 's'){
+                // swap
+                int count = string_to_int(input[i]);
+                for(int j = 0; j < LETTER_NUM - count; j++){
+                    v.push_back(v.front());
+                    v.erase(v.begin());
+                }
+            } else if (input[i][0] == 'x'){
+                // exchange
+                string s1 = input[i];
+                string s2 = input[i];
+                while(s1.back() != '/') s1.pop_back();
+                while(s2.front() != '/') s2.erase(s2.begin());
+                int n1 = string_to_int(s1);
+                int n2 = string_to_int(s2);
+                iter_swap(v.begin() + n1, v.begin() + n2);
+            } else if (input[i][0] == 'p'){
+                // partner
+                int index1;
+                int index2;
+                for(int j = 0; j < LETTER_NUM; j++){
+                    if(v[j] == input[i][1]) index1 = j;
+                    if(v[j] == input[i][3]) index2 = j;
+                }
+                iter_swap(v.begin() + index1, v.begin() + index2);
             }
-            iter_swap(v.begin() + index1, v.begin() + index2);
         }
     }
-    
-    // map the initial index to the new index
-    map<int, int> m;
-    for(int i = 0; i < LETTER_NUM; i++){
-        m[v[i] - 'a'] = i;
-    }
-
-    // ??? iterate?
-    
     // form output
     for(int i = 0; i < LETTER_NUM; i++){
         result += v[i];
