@@ -60,3 +60,6 @@ void day20_bonus();
 
 void day21();
 void day21_bonus();
+
+void day22();
+void day22_bonus();
