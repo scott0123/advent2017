@@ -3,6 +3,6 @@
 
 int main(){
 
-    day22_bonus();
+    day23_bonus();
     return 0;
 }
