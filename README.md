@@ -26,3 +26,6 @@ The file structure should look like:
     ```
 2. Run the `make` command (If this fails, try `make clean` and then `make`)
 3. Run `./advent`
+
+## Final Dashboard
+![Advent of Code 2017 Scott Liu Dashboard Screenshot](./50stars.png "50/50 Stars")
